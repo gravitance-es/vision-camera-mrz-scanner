@@ -4,8 +4,8 @@ import MLKitVision
 import MLKitTextRecognition
 
 @objc(VisionCameraMrzScanner)
-public class VisionCameraMrzScanner: NSObject, FrameProcessorPluginBase {
-    
+public class VisionCameraMrzScanner: FrameProcessorPlugin {
+
     private static var textRecognizer = TextRecognizer.textRecognizer()
     
     private static func getBlockArray(_ blocks: [TextBlock]) -> [[String: Any]] {
@@ -110,8 +110,8 @@ public class VisionCameraMrzScanner: NSObject, FrameProcessorPluginBase {
     }
     
     @objc
-    public static func callback(_ frame: Frame!, withArgs _: [Any]!) -> Any! {
-        
+    public static func callback(_ frame: Frame!, withArguments args: [Any]?) -> Any? {
+
         guard (CMSampleBufferGetImageBuffer(frame.buffer) != nil) else {
           print("Failed to get image buffer from sample buffer.")
           return nil
