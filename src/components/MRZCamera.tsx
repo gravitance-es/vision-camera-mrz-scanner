@@ -254,8 +254,8 @@ const MRZCamera: FC<PropsWithChildren<MRZCameraProps>> = ({
             isActiveCamera
               ? isActiveCamera
               : cameraProps?.isActive
-                ? cameraProps?.isActive
-                : isActive
+              ? cameraProps?.isActive
+              : isActive
           }
           ref={camera}
           photo={cameraProps?.photo}
