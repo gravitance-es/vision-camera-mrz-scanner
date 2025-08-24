@@ -14,7 +14,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin
+import com.mrousavy.camera.frameprocessors.FrameProcessorPlugin
 
 class VisionCameraMrzScannerPlugin: FrameProcessorPlugin("scanMRZ"){
 
