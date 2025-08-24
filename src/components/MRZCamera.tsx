@@ -19,7 +19,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {runOnJS} from 'react-native-worklets';
 import {
   Camera,
   Frame,
@@ -36,6 +35,7 @@ import {
   scanMRZ,
   sortFormatsByResolution,
 } from 'vision-camera-mrz-scanner';
+import {Worklets} from 'react-native-worklets-core';
 
 const MRZCamera: FC<PropsWithChildren<MRZCameraProps>> = ({
   enableBoundingBox,
@@ -160,13 +160,15 @@ const MRZCamera: FC<PropsWithChildren<MRZCameraProps>> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [device]);
 
+  const handleScanFunc = Worklets.createRunOnJS(handleScan);
+
   /* Using the useFrameProcessor hook to process the video frames. */
   const frameProcessor = useFrameProcessor(
     frame => {
       'worklet';
       if (!scanSuccess) {
         const ocrData = scanMRZ(frame);
-        runOnJS(handleScan)(ocrData, frame);
+        handleScanFunc(ocrData, frame);
       }
     },
     [handleScan],
@@ -252,8 +254,8 @@ const MRZCamera: FC<PropsWithChildren<MRZCameraProps>> = ({
             isActiveCamera
               ? isActiveCamera
               : cameraProps?.isActive
-              ? cameraProps?.isActive
-              : isActive
+                ? cameraProps?.isActive
+                : isActive
           }
           ref={camera}
           photo={cameraProps?.photo}
